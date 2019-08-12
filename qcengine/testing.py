@@ -119,6 +119,7 @@ def failure_engine():
 _programs = {
     "dftd3": which('dftd3', return_bool=True),
     "geometric": which_import("geometric", return_bool=True),
+    "optking": which_import("optking", return_bool=True),
     "psi4": is_program_new_enough("psi4", "1.2"),
     "rdkit": which_import("rdkit", return_bool=True),
     "qcdb": which_import("qcdb", return_bool=True),
@@ -144,6 +145,7 @@ def _build_pytest_skip(program):
 using_dftd3 = _build_pytest_skip("dftd3")
 using_entos = _build_pytest_skip("entos")
 using_geometric = _build_pytest_skip("geometric")
+using_optking = _build_pytest_skip("optking")
 using_mopac = _build_pytest_skip("mopac")
 using_molpro = _build_pytest_skip("molpro")
 using_mp2d = _build_pytest_skip("mp2d")

@@ -177,3 +177,27 @@ def test_geometric_generic(program, model, bench):
 
     assert "_secret_tags" in ret.trajectory[0].extras
     assert "data1" == ret.trajectory[0].extras["_secret_tags"]["mysecret_tag"]
+
+@testing.using_psi4
+@testing.using_optking
+def test_optking_psi4():
+    inp = copy.deepcopy(_base_json)
+
+    inp["initial_molecule"] = qcng.get_molecule("hydrogen")
+    inp["input_specification"]["model"] = {"method": "HF", "basis": "sto-3g"}
+    inp["input_specification"]["keywords"] = {"scf_properties": ["wiberg_lowdin_indices"]}
+    inp["keywords"]["program"] = "psi4"
+
+    inp = OptimizationInput(**inp)
+
+    ret = qcng.compute_procedure(inp, "optking", raise_error=True)
+    assert 10 > len(ret.trajectory) > 1
+
+    assert pytest.approx(ret.final_molecule.measure([0, 1]), 1.e-4) == 1.3459150737
+    assert ret.provenance.creator.lower() == "optking"
+    assert ret.trajectory[0].provenance.creator.lower() == "psi4"
+
+    # Check keywords passing
+    for single in ret.trajectory:
+        assert "scf_properties" in single.keywords
+

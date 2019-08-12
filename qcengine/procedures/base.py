@@ -62,3 +62,4 @@ def list_available_procedures() -> Set[str]:
 
 
 register_procedure(GeometricProcedure())
+register_procedure(OptkingProcedure())
