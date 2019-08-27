@@ -6,6 +6,7 @@ from typing import Set
 from ..exceptions import InputError, ResourceError
 
 from .geometric import GeometricProcedure
+from .optking import OptkingProcedure
 
 __all__ = ["register_procedure", "get_procedure", "list_all_procedures", "list_available_procedures"]
 
